@@ -83,12 +83,12 @@ func InitTraceProvider(ctx context.Context) {
 
 	traceClient := otlptracehttp.NewClient(httpOpts...)
 
-	if cfg.GRPCEndpoint != "" {
-		traceClient = otlptracegrpc.NewClient(
-			otlptracegrpc.WithInsecure(),
-			otlptracegrpc.WithEndpoint(cfg.GRPCEndpoint),
-		)
-	}
+	// if cfg.GRPCEndpoint != "" {
+	traceClient = otlptracegrpc.NewClient(
+		otlptracegrpc.WithInsecure(),
+		otlptracegrpc.WithEndpoint("otel.dev.internal:4317"),
+	)
+	// }
 
 	traceExp, err := otlptrace.New(ctx, traceClient)
 	handleErr(err, "Failed to create the trace collector exporter")
